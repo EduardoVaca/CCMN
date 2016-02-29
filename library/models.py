@@ -3,17 +3,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class Book(models.Model):
-	name = models.CharField(max_length=255)
-
-	def __str__(self):
-		return self.name
-
-	class Meta:
-		ordering = ('name',)
-		verbose_name_plural = 'Books'
-
-
 class Author(models.Model):
 	name = models.CharField(max_length=255)
 
@@ -34,6 +23,19 @@ class Category(models.Model):
 	class Meta:
 		ordering = ('name',)
 		verbose_name_plural = 'Categories'
+
+
+class Book(models.Model):
+	name = models.CharField(max_length=255)
+	authors = models.ManyToManyField(Author, through='Wrote')
+	categories = models.ManyToManyField(Category, through='Has')
+
+	def __str__(self):
+		return self.name
+
+	class Meta:
+		ordering = ('name',)
+		verbose_name_plural = 'Books'
 
 
 class Wrote(models.Model):
