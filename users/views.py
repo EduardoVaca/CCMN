@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+
+def in_admin_group(user):
+    """Use with a ``user_passes_test`` decorator to restrict access to 
+    authenticated users who are not in the "administrator" group."""
+    return user.is_authenticated() and (user.is_superuser or user.groups.filter(name='administrador').exists())
 
 
 def auth_login(request):
@@ -13,10 +19,11 @@ def auth_login(request):
 		return redirect('/')
 
 	context = {}
-	return render(request, 'admin/login.html', context)
+	return render(request, 'administrador/login.html', context)
 
 
+@user_passes_test(in_admin_group, login_url = 'login/')
 def dashboard(request):
 	context = {}
-	return render(request, 'admin/dashboard.html', context)
+	return render(request, 'administrador/dashboard.html', context)
 
