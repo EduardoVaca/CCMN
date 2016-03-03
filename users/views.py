@@ -9,7 +9,7 @@ from .models import AdminUser
 def in_admin_group(user):
     """Use with a ``user_passes_test`` decorator to restrict access to 
     authenticated users who are not in the "administrator" group."""
-    return user.is_authenticated() and (user.is_superuser or user.groups.filter(name='administrador').exists())
+    return user.is_authenticated() and (user.is_superuser or user.groups.filter(name='administrator').exists())
 
 
 def auth_login(request):
@@ -18,8 +18,10 @@ def auth_login(request):
 		password = request.POST.get('password', None)
 
 		user = authenticate(username=username, password=password)
-		login(request, user)
-		return redirect('admin_users:dashboard')
+		if user:	
+			if user.groups.filter(name='administrator').exists() or user.is_superuser:
+				login(request, user)
+				return redirect('admin_users:dashboard')
 
 	context = {}
 	return render(request, 'administrador/login.html', context)
@@ -42,8 +44,10 @@ def add_user_admin(request):
 	if request.method == 'POST':
 		username = request.POST.get('username', None)
 		password = request.POST.get('password', None)
-		user = User.objects.create(username=username, password=password)
-		admin_user = AdminUser.objects.create(user=user)
+		user, created = User.objects.get_or_create(username=username)
+		user.set_password(password)
+		user.save()		
+		admin_user = AdminUser.objects.create(user=user)		
 		admin_user.save()
 		return redirect('admin_users:users_admin')
 	else:
