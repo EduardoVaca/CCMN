@@ -19,7 +19,7 @@ def auth_login(request):
 
 		user = authenticate(username=username, password=password)
 		login(request, user)
-		return redirect('/')
+		return redirect('admin_users:dashboard')
 
 	context = {}
 	return render(request, 'administrador/login.html', context)
