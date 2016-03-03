@@ -23,8 +23,11 @@
                     	{% for admin in admin_users %}
 							<tr class="even pointer">
 	                            <td class="a-center ">{{ admin.user.username }}</td>
-	                            <td class="a-center "><a href="#"><i class="fa fa-close"></i></a>
-	                            </td>
+                                {% if admin.user == user %}
+                                    <td></td>
+                                {% else %}
+                                    <td class="a-center "><a href="{% url 'admin_users:delete_user_admin' admin.id %}"><i class="fa fa-close"></i></a></td>
+                                {% endif %}	                            	                            
                         	</tr>
                     	{% endfor %}
                                                 

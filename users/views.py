@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -27,23 +27,22 @@ def auth_login(request):
 	return render(request, 'administrador/login.html', context)
 
 
-@user_passes_test(in_admin_group, login_url = 'login/')
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def dashboard(request):
 	context = {}
 	return render(request, 'administrador/dashboard.html', context)
 
 
-@user_passes_test(in_admin_group, login_url = 'login/')
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def users_admin(request):	
-	admin_users = AdminUser.objects.all()
-	leng = len(admin_users)
+	admin_users = AdminUser.objects.all().order_by('user')	
 	context = {
 		'admin_users': admin_users,			
 	}
 	return render(request, 'administrador/user_administrador_lista.html', context)
 
 
-@user_passes_test(in_admin_group, login_url = 'login/')
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def add_user_admin(request):
 	if request.method == 'POST':
 		username = request.POST.get('username', None)
@@ -57,6 +56,15 @@ def add_user_admin(request):
 	else:
 		context = {}
 		return render(request, 'administrador/add_admin_user.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def delete_user_admin(request, pk):
+	admin_user = get_object_or_404(AdminUser, pk = pk)
+	admin_user.user.delete()
+	admin_user.delete()
+	return redirect('admin_users:users_admin')
+
 
 
 
