@@ -5,7 +5,7 @@
 
     <div class="col-md-5 col-sm-5 col-xs-5">
         <div class="x_panel">
-            <div class="x_title">
+            <div class="x_title">            	
                 <h2>Usuarios <small>Administradores</small></h2>                
                 <div class="clearfix"></div>
             </div>
@@ -20,17 +20,14 @@
                     </thead>
 
                     <tbody>
-                        <tr class="even pointer">
-                            <td class=" ">121000040</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        <tr class="odd pointer">
-                            <td class=" ">121000039</td>
-                            <td class=" last"><a href="#">View</a>
-                            </td>
-                        </tr>
-                        
+                    	{% for admin in admin_users %}
+							<tr class="even pointer">
+	                            <td class="a-center ">{{ admin.user.username }}</td>
+	                            <td class="a-center "><a href="#"><i class="fa fa-close"></i></a>
+	                            </td>
+                        	</tr>
+                    	{% endfor %}
+                                                
                     </tbody>
 
                 </table>

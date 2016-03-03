@@ -34,8 +34,12 @@ def dashboard(request):
 
 
 @user_passes_test(in_admin_group, login_url = 'login/')
-def users_admin(request):
-	context = {}
+def users_admin(request):	
+	admin_users = AdminUser.objects.all()
+	leng = len(admin_users)
+	context = {
+		'admin_users': admin_users,			
+	}
 	return render(request, 'administrador/user_administrador_lista.html', context)
 
 
