@@ -41,7 +41,7 @@
 
 
 
-<a href="add/" class="btn btn-round btn-success">Agregar administrador</a>
+<a href="{% url 'admin_users:add_user_admin' %}" class="btn btn-round btn-success">Agregar administrador</a>
 {%endblock%}
 <!-- Datatables -->
 {% block js %}
