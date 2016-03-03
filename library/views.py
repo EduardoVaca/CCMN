@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from .models import Author
+from .forms import AuthorForm
+
 
 def in_admin_group(user):
     """Use with a ``user_passes_test`` decorator to restrict access to 
@@ -18,4 +20,20 @@ def author_list(request):
 		'authors': authors,
 	}
 	return render(request, 'administrador/author_list.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def author_add(request):
+	if request.method == 'POST':
+		form = AuthorForm(request.POST)
+		if form.is_valid():
+			author = form.save()
+			author.save()
+			return redirect('library:author_list')
+	else:
+		form = AuthorForm()
+	context = {
+		'authorForm': form,
+	}
+	return render(request, 'administrador/add_author.html', context)
 
