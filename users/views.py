@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def auth_login(request):
+	context = {}
+	return render(request, 'admin/login.html', context)
