@@ -90,7 +90,7 @@
                                 </li>
                                 <li><a><i class="fa fa-desktop"></i> Usuarios <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="users-admin/">Administradores</a>
+                                        <li><a href="{% url 'admin_users:users_admin' %}">Administradores</a>
                                         </li>
                                         <li><a href="media_gallery.html">Clientes</a>
                                         </li>
@@ -178,6 +178,7 @@
     </div>
 
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/parsley/parsley.min.js' %}"></script>
     <!-- daterangepicker -->
     <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script>
