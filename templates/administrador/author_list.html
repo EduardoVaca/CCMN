@@ -24,7 +24,7 @@
                     	{% for author in authors %}
 							<tr class="even pointer">
 	                            <td class="a-center ">{{ author.name }}</td>
-                                <td class="a-center col-md-2"><a href=""><i class="fa fa-edit"></i></a></td>
+                                <td class="a-center col-md-2"><a href="{% url 'library:author_delete' author.id %}"><i class="fa fa-edit"></i></a></td>
                                 <td class="a-center col-md-2"><a href=""><i class="fa fa-close"></i></a></td>
                         	</tr>
                     	{% endfor %}

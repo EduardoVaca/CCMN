@@ -37,3 +37,9 @@ def author_add(request):
 	}
 	return render(request, 'administrador/add_author.html', context)
 
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def author_delete(request, pk):
+	author = get_object_or_404(Author, pk=pk)
+	author.delete()	
+	return redirect('library:author_list')
