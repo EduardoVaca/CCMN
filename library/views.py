@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from .models import Author, Category
-from .forms import AuthorForm
+from .forms import AuthorForm, CategoryForm
 
 
 def in_admin_group(user):
@@ -52,3 +52,19 @@ def category_list(request):
 		'categories': categories,
 	}
 	return render(request, 'administrador/category_list.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def category_add(request):
+	if request.method == 'POST':
+		form = CategoryForm(request.POST)
+		if form.is_valid():
+			category = form.save()
+			category.save()
+			return redirect('library:category_list')
+	else:
+		form = CategoryForm()
+	context = {
+		'categoryForm': form,
+	}
+	return render(request, 'administrador/category_add.html', context)
