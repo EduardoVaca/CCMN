@@ -39,6 +39,22 @@ def author_add(request):
 
 
 @user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def author_update(request, pk):
+	current_author = get_object_or_404(Author, pk=pk)
+	if request.method == 'POST':		
+		form = AuthorForm(request.POST or None, instance=current_author)
+		if form.is_valid():
+			form.save()
+			return redirect('library:author_list')
+	else:
+		form = AuthorForm(instance=current_author)
+	context = {
+		'authorForm': form,
+	}
+	return render(request, 'administrador/add_author.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def author_delete(request, pk):
 	author = get_object_or_404(Author, pk=pk)
 	author.delete()	
@@ -68,7 +84,7 @@ def category_add(request):
 		'categoryForm': form,
 	}
 	return render(request, 'administrador/category_add.html', context)
-	
+
 
 @user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def category_delete(request, pk):
