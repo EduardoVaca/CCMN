@@ -68,3 +68,10 @@ def category_add(request):
 		'categoryForm': form,
 	}
 	return render(request, 'administrador/category_add.html', context)
+	
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def category_delete(request, pk):
+	category = get_object_or_404(Category, pk=pk)
+	category.delete()
+	return redirect('library:category_list')
