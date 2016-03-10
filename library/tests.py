@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Author, Category, Book, Wrote, Has
+from .models import Author, Category, Book
 
 
 class AuthorTestCase(TestCase):
@@ -9,10 +9,11 @@ class AuthorTestCase(TestCase):
 		self.category_love = Category.objects.create(name='Love')
 		self.category_mistery = Category.objects.create(name='Mistery')
 		self.book_sombra = Book.objects.create( name='La sombra del viento')
-		Wrote.objects.create(author=self.author, book=self.book_sombra)
-		Wrote.objects.create(author=self.author2, book=self.book_sombra)
-		Has.objects.create(book=self.book_sombra, category=self.category_love)
-		Has.objects.create(book=self.book_sombra, category=self.category_mistery)
+		self.book_sombra.save()
+		self.book_sombra.authors.add(self.author)
+		self.book_sombra.authors.add(self.author2)
+		self.book_sombra.categories.add(self.category_love)
+		self.book_sombra.categories.add(self.category_mistery)
 		
 
 	def test_author_str(self):
