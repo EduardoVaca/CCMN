@@ -10,4 +10,6 @@ urlpatterns = [
 	url(r'^administrador/category/$', views.category_list, name='category_list'),
 	url(r'^administrador/category/add/$', views.category_add, name='category_add'),
 	url(r'^administrador/category/delete/(?P<pk>[0-9]+)/$', views.category_delete, name='category_delete'),
+	url(r'^administrador/book/$', views.book_list, name='book_list'),
+	url(r'^administrador/book/add/$', views.book_add, name='book_add'),
 ]

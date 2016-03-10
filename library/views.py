@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
-from .models import Author, Category
-from .forms import AuthorForm, CategoryForm
+from .models import Author, Category, Book
+from .forms import AuthorForm, CategoryForm, BookForm
 
 
 def in_admin_group(user):
@@ -91,3 +91,28 @@ def category_delete(request, pk):
 	category = get_object_or_404(Category, pk=pk)
 	category.delete()
 	return redirect('library:category_list')
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def book_list(request):
+	books = Book.objects.all().order_by('name')
+	context = {
+		'books': books,
+	}
+	return render(request, 'administrador/book_list.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def book_add(request):
+	if request.method == 'POST':
+		form = BookForm(request.POST)
+		if form.is_valid():
+			book = form.save()
+			book.save()
+			return redirect('library:book_list')
+	else:
+		form = BookForm()
+	context = {
+		'bookForm': form,
+	}
+	return render(request, 'administrador/book_add.html', context)

@@ -1,0 +1,58 @@
+{% extends 'administrador/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="x_title">               
+                <h2>Nuevo Libro<small></small></h2>                
+                <div class="clearfix"></div>
+            </div>
+    <div class="row row-centered">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-centered">
+            <form class="form-horizontal" data-parsley-validate method="POST">
+
+            	{% csrf_token %}
+
+            	{% for field in bookForm.visible_fields %}
+                    {{ field.errors }}
+                    <div class="row" style="margin-bottom:5px">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">{{ field.help_text}}</label>
+                            <div class="col-sm-8">
+                                {{ field }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            	           	
+				<button type="submit" class="btn btn-round btn-success">Guardar</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+                    $.listen('parsley:field:validate', function () {
+                        validateFront();
+                    });
+                    $('#demo-form .btn').on('click', function () {
+                        $('#demo-form').parsley().validate();
+                        validateFront();
+                    });
+                    var validateFront = function () {
+                        if (true === $('#demo-form').parsley().isValid()) {
+                            $('.bs-callout-info').removeClass('hidden');
+                            $('.bs-callout-warning').addClass('hidden');
+                        } else {
+                            $('.bs-callout-info').addClass('hidden');
+                            $('.bs-callout-warning').removeClass('hidden');
+                        }
+                    };
+                });
+    </script>
+{% endblock %}
