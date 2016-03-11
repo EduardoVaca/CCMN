@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
-from .models import Author, Category
+from .models import Author, Category, Book
 from .forms import AuthorForm, CategoryForm
 
 
@@ -91,3 +91,12 @@ def category_delete(request, pk):
 	category = get_object_or_404(Category, pk=pk)
 	category.delete()
 	return redirect('library:category_list')
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def book_list(request):
+	books = Book.objects.all().order_by('name')
+	context = {
+		'books': books,
+	}
+	return render(request, 'administrador/book_list.html', context)
