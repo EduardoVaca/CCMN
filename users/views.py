@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from .models import AdminUser
+from library.models import Book, Author, Category
 
 
 def in_admin_group(user):
@@ -29,7 +30,14 @@ def auth_login(request):
 
 @user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def dashboard(request):
-	context = {}
+	books_num = Book.objects.all().count()
+	authors_num = Author.objects.all().count()
+	categories_num = Category.objects.all().count()
+	context = {
+		'books_num': books_num,
+		'authors_num': authors_num,
+		'categories_num': categories_num,
+	}
 	return render(request, 'administrador/dashboard.html', context)
 
 
