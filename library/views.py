@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from .models import Author, Category, Book
-from .forms import AuthorForm, CategoryForm
+from .forms import AuthorForm, CategoryForm, BookForm
 
 
 def in_admin_group(user):
@@ -100,3 +100,14 @@ def book_list(request):
 		'books': books,
 	}
 	return render(request, 'administrador/book_list.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def book_add(request):	
+	authors = Author.objects.all().order_by('name')
+	categories = Category.objects.all().order_by('name')
+	context = {
+		'authors': authors,
+		'categories': categories,
+	}
+	return render(request, 'administrador/book_add.html', context)

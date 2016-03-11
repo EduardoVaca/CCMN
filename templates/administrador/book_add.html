@@ -1,0 +1,98 @@
+{% extends 'administrador/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="x_title">               
+                <h2>Nuevo Libro<small></small></h2>                
+                <div class="clearfix"></div>
+    </div>
+    <div class="row row-centered">
+        <div class="col-md-7 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <form class="form-horizontal form-label-left">
+
+                        <div class="row" style="margin-bottom:5px">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Nombre libro: </label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="id_name" maxlength="255" name="name" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:5px">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Autor:</label>
+                                <div class="col-sm-7">
+                                    <select class="select2_single form-control" tabindex="-1">
+                                        {% for author in authors %}
+                                            <option value="{{ author.pk }}">{{ author.name }}</option>
+                                        {% endfor %}
+                                    </select>                                    
+                                </div>
+                                <a href=""><i class="fa fa-plus-square-o col-sm-1"></i></a>
+                            </div>
+                        </div> 
+                        <div class="row" style="margin-bottom:5px">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Categoría:</label>
+                                <div class="col-sm-8">
+                                    <select class="select2_single form-control" tabindex="-1">
+                                        {% for category in categories %}
+                                            <option value="{{ category.pk }}">{{ category.name }}</option>
+                                        {% endfor %}                          
+                                    </select>
+                                </div>
+                            </div>
+                        </div> 
+                        <input type="checkbox" class="js-switch" disabled="disabled" hidden/>         
+                    </form>
+                </div>
+                <button type="submit" class="btn btn-round btn-success">Guardar</button>
+            </div>
+        </div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    
+    <script>
+        $(document).ready(function () {
+            $(".select2_single").select2({
+                placeholder: "Select a state",
+                allowClear: true
+            });
+            $(".select2_group").select2({});
+            $(".select2_multiple").select2({
+                maximumSelectionLength: 4,
+                placeholder: "With Max Selection limit 4",
+                allowClear: true
+            });
+        });
+    </script>
+    <!-- /select2 -->
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+                    $.listen('parsley:field:validate', function () {
+                        validateFront();
+                    });
+                    $('#demo-form .btn').on('click', function () {
+                        $('#demo-form').parsley().validate();
+                        validateFront();
+                    });
+                    var validateFront = function () {
+                        if (true === $('#demo-form').parsley().isValid()) {
+                            $('.bs-callout-info').removeClass('hidden');
+                            $('.bs-callout-warning').addClass('hidden');
+                        } else {
+                            $('.bs-callout-info').addClass('hidden');
+                            $('.bs-callout-warning').removeClass('hidden');
+                        }
+                    };
+                });
+    </script>
+{% endblock %}
