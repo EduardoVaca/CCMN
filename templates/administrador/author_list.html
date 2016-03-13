@@ -6,7 +6,8 @@
     <div class="col-md-6 col-sm-6 col-xs-6">
         <div class="x_panel">
             <div class="x_title">            	
-                <h2>Autores <small></small></h2>                
+                <h2>Autores <small></small></h2> 
+                <a href="{% url 'library:author_add' %}" class="btn btn-round btn-success right-align">Agregar autor</a>               
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -37,9 +38,6 @@
         </div>
     </div>
 
-
-
-<a href="{% url 'library:author_add' %}" class="btn btn-round btn-success">Agregar autor</a>
 {%endblock%}
 <!-- Datatables -->
 {% block js %}

@@ -6,7 +6,8 @@
     <div class="col-md-12 col-sm-6 col-xs-6">
         <div class="x_panel">
             <div class="x_title">            	
-                <h2>Libros<small></small></h2>  
+                <h2>Libros<small></small></h2>
+                <a href="{% url 'library:book_add' %}" class="btn btn-round btn-success right-align">Agregar Libro</a>  
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -25,19 +26,19 @@
                     <tbody>
                     	{% for book in books %}
 							<tr class="even pointer">
-	                            <td class="a-center ">{{ book.name }}</td>
-	                            <td class="a-center">
+	                            <td class="a-center col-md-3">{{ book.name }}</td>
+	                            <td class="a-center col-md-4">
 	                            	{% for author in book.authors.all %}
 										{{ author.name }},
 	                            	{% endfor %}
 	                            </td>
-	                            <td class="a-center">
+	                            <td class="a-center col-md-3">
 	                            	{% for category in book.categories.all %}
 										{{ category.name }},
 	                            	{% endfor %}
 	                            </td>
-                                <td class="a-center col-md-2"><a href=""><i class="fa fa-edit"></i></a></td>
-                                <td class="a-center col-md-2"><a href=""><i class="fa fa-close"></i></a></td>
+                                <td class="a-center col-md-1"><a href=""><i class="fa fa-edit"></i></a></td>
+                                <td class="a-center col-md-1"><a href=""><i class="fa fa-close"></i></a></td>
                         	</tr>
                     	{% endfor %}
                                                 
@@ -49,9 +50,6 @@
         </div>
     </div>
 
-
-
-<a href="{% url 'library:book_add' %}" class="btn btn-round btn-success">Agregar Libro</a>
 {%endblock%}
 <!-- Datatables -->
 {% block js %}
