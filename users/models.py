@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User, Group
 
+from library.models import Book
+
 
 class AdminUser(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL)
@@ -23,6 +25,7 @@ class AdminUser(models.Model):
 
 class BaseUser(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL)
+	book_borrows = models.ManyToManyField(Book, through='book_borrows.Borrow')
 	name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	address = models.CharField(max_length=255)
