@@ -30,6 +30,18 @@ class Book(models.Model):
 	authors = models.ManyToManyField(Author, through='Wrote')
 	categories = models.ManyToManyField(Category, through='Has')
 
+	STATE_AVAILABLE = 'AV'
+	STATE_BORROWED = 'BO'
+
+	state_choices = (
+			(STATE_AVAILABLE, 'Disponible'),
+			(STATE_BORROWED, 'Prestado'),
+		)
+
+	book_status = models.CharField(max_length=2,
+									choices=state_choices,
+									default='AV')
+
 	def __str__(self):
 		return self.name
 

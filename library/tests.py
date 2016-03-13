@@ -42,3 +42,8 @@ class AuthorTestCase(TestCase):
 		"""
 		self.assertEqual(self.book_sombra.categories.all()[0].name, 'Love')
 		self.assertEqual(self.book_sombra.categories.all()[1].name, 'Mistery')
+
+	def test_book_status(self):
+		"""Tests if the book status is present in record
+		"""
+		self.assertEqual(self.book_sombra.book_status, 'AV')
