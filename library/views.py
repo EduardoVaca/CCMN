@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
-from .models import Author, Category, Book
+from .models import Author, Category, Book, Wrote, Has
 from .forms import AuthorForm, CategoryForm, BookForm
 
 
@@ -104,6 +104,19 @@ def book_list(request):
 
 @user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def book_add(request):	
+	if request.method == 'POST':
+		name = request.POST.get('name_book')
+		authors = request.POST.getlist('author')
+		categories = request.POST.getlist('category')
+		book = Book.objects.create(name=name)
+		for author in authors:
+			current_author = Author.objects.get(pk=author)
+			Wrote.objects.create(author=current_author, book=book)
+		for category in categories:
+			current_category = Category.objects.get(pk=category)
+			Has.objects.create(book=book, category=current_category)
+		return redirect('library:book_list')
+
 	authors = Author.objects.all().order_by('name')
 	categories = Category.objects.all().order_by('name')
 	context = {

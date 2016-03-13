@@ -11,21 +11,21 @@
         <div class="col-md-7 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <form class="form-horizontal form-label-left">
-
+                    <form class="form-horizontal form-label-left" data-parsley-validate method="post">
+                         {% csrf_token %}
                         <div class="row" style="margin-bottom:5px">
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Nombre libro: </label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" id="id_name" maxlength="255" name="name" type="text" />
+                                    <input class="form-control" id="id_name" required="required" maxlength="255" name="name_book" type="text" />
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="row" style="margin-bottom:5px">
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Autor:</label>
                                 <div class="col-sm-7">
-                                    <select class="select2_single form-control" tabindex="-1">
+                                    <select class="select2_single form-control" tabindex="-1" name="author">
                                         {% for author in authors %}
                                             <option value="{{ author.pk }}">{{ author.name }}</option>
                                         {% endfor %}
@@ -36,11 +36,12 @@
                         </div> 
                         <div id="moreAuthors">
                         </div>
+                        <input type="checkbox" class="js-switch" disabled="disabled" hidden/> 
                         <div class="row" style="margin-bottom:5px">
                             <div class="form-group">
                                 <label class="control-label col-sm-4">Categoría:</label>
                                 <div class="col-sm-7">
-                                    <select class="select2_single form-control" tabindex="-1">
+                                    <select class="select2_single form-control" tabindex="-1" name='category'>
                                         {% for category in categories %}
                                             <option value="{{ category.pk }}">{{ category.name }}</option>
                                         {% endfor %}                          
@@ -50,10 +51,10 @@
                             </div>
                         </div> 
                         <div id="moreCategories"></div>
-                        <input type="checkbox" class="js-switch" disabled="disabled" hidden/>         
+                         
+                        <button type="submit" class="btn btn-round btn-success">Guardar</button>       
                     </form>
-                </div>
-                <button type="submit" class="btn btn-round btn-success">Guardar</button>
+                </div>          
             </div>
         </div>
 	</div>
@@ -66,7 +67,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#addAuthor').click(function(){
-                $('#moreAuthors').append("<div class='row' style='margin-bottom:5px'><div class='form-group'><label class='control-label col-sm-4'>Autor:</label><div class='col-sm-7'><select class='select2_single form-control' tabindex='-1'>{% for author in authors %}<option value='{{ author.pk }}'>{{ author.name }}</option>{% endfor %}</select></div></div>");
+                $('#moreAuthors').append("<div class='row' style='margin-bottom:5px'><div class='form-group'><label class='control-label col-sm-4'>Autor:</label><div class='col-sm-7'><select name='author' class='select2_single form-control' tabindex='-1'>{% for author in authors %}<option value='{{ author.pk }}'>{{ author.name }}</option>{% endfor %}</select></div></div>");
 
                 $(".select2_single").select2({
                     placeholder: "Select a state",
@@ -81,7 +82,7 @@
             });
 
             $('#addCategory').click(function(){
-                $('#moreCategories').append("<div class='row' style='margin-bottom:5px'><div class='form-group'><label class='control-label col-sm-4'>Categoría:</label><div class='col-sm-7'><select class='select2_single form-control' tabindex='-1'>{% for category in categories %}<option value='{{ category.pk }}'>{{ category.name }}</option>{% endfor %}</select></div></div></div>");
+                $('#moreCategories').append("<div class='row' style='margin-bottom:5px'><div class='form-group'><label class='control-label col-sm-4'>Categoría:</label><div class='col-sm-7'><select name='category' class='select2_single form-control' tabindex='-1'>{% for category in categories %}<option value='{{ category.pk }}'>{{ category.name }}</option>{% endfor %}</select></div></div></div>");
 
                 $(".select2_single").select2({
                     placeholder: "Select a state",
