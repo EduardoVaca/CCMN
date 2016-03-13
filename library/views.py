@@ -87,6 +87,22 @@ def category_add(request):
 
 
 @user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def category_update(request, pk):
+	current_category = get_object_or_404(Category, pk=pk)
+	if request.method == 'POST':		
+		form = CategoryForm(request.POST or None, instance=current_category)
+		if form.is_valid():
+			form.save()
+			return redirect('library:category_list')
+	else:
+		form = CategoryForm(instance=current_category)
+	context = {
+		'categoryForm': form,
+	}
+	return render(request, 'administrador/category_add.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
 def category_delete(request, pk):
 	category = get_object_or_404(Category, pk=pk)
 	category.delete()
