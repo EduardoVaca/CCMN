@@ -3,6 +3,19 @@
     float:right;
 }
 
+.center-cell{
+    text-align:center; 
+    vertical-align:middle;
+}
+
+.green-cell {
+    color: #25d34e;    
+}
+
+.blue-cell {    
+    color: #20c0fb;
+}
+
 body.nav-sm .container.body .left_col {
     width: 70px;
     padding: 0;

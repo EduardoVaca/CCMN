@@ -17,6 +17,7 @@
                             <th class=" no-link last"><span class="nobr">Libro</span>
                             <th class=" no-link last"><span class="nobr">Autor</span>
                             <th class=" no-link last"><span class="nobr">Categoría</span>
+                            <th class=" no-link last"><span class="nobr">Status </span>
                             <th class=" no-link last"><span class="nobr">Editar</span>
                             <th class=" no-link last"><span class="nobr">Eliminar</span>
                             </th>
@@ -32,11 +33,20 @@
 										{{ author.name }},
 	                            	{% endfor %}
 	                            </td>
-	                            <td class="a-center col-md-3">
+	                            <td class="a-center col-md-2">
 	                            	{% for category in book.categories.all %}
 										{{ category.name }},
 	                            	{% endfor %}
 	                            </td>
+                                {% if book.book_status == 'AV' %}
+                                    <td class="green-cell col-md-1">
+                                        {{ book.get_book_status_display }}
+                                    </td>
+                                {% else %}
+                                    <td class="blue-cell col-md-1">
+                                        {{ book.get_book_status_display }}
+                                    </td>
+                                {% endif %}
                                 <td class="a-center col-md-1"><a href=""><i class="fa fa-edit"></i></a></td>
                                 <td class="a-center col-md-1"><a href="{% url 'library:book_delete' book.pk %}"><i class="fa fa-close"></i></a></td>
                         	</tr>

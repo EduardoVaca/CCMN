@@ -47,3 +47,4 @@ class AuthorTestCase(TestCase):
 		"""Tests if the book status is present in record
 		"""
 		self.assertEqual(self.book_sombra.book_status, 'AV')
+		self.assertEqual(self.book_sombra.get_book_status_display(), 'Disponible')
