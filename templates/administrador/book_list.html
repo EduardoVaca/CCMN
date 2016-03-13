@@ -38,7 +38,7 @@
 	                            	{% endfor %}
 	                            </td>
                                 <td class="a-center col-md-1"><a href=""><i class="fa fa-edit"></i></a></td>
-                                <td class="a-center col-md-1"><a href=""><i class="fa fa-close"></i></a></td>
+                                <td class="a-center col-md-1"><a href="{% url 'library:book_delete' book.pk %}"><i class="fa fa-close"></i></a></td>
                         	</tr>
                     	{% endfor %}
                                                 

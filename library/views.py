@@ -124,3 +124,10 @@ def book_add(request):
 		'categories': categories,
 	}
 	return render(request, 'administrador/book_add.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def book_delete(request, pk):
+	book = get_object_or_404(Book, pk=pk)
+	book.delete()
+	return redirect('library:book_list')
