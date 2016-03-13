@@ -93,7 +93,7 @@
                                     <ul class="nav child_menu" style="display: none">
                                         <li><a href="{% url 'admin_users:users_admin' %}">Administradores</a>
                                         </li>
-                                        <li><a href="media_gallery.html">Usuarios</a>
+                                        <li><a href="{% url 'admin_users:base_user_list' %}">Usuarios</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -185,7 +185,7 @@
     <script type="text/javascript" src="{% static 'js/datepicker/daterangepicker.js' %}"></script>
     <script src="{% static 'js/datatables/js/jquery.dataTables.js' %}"></script>
     <script src="{% static 'js/datatables/tools/js/dataTables.tableTools.js' %}"></script>
-
+    <script src="{% static 'js/validator/validator.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     <!-- select2 -->
     <script src="{% static 'js/select/select2.full.js' %}"></script>

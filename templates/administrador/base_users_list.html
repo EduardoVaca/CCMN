@@ -3,32 +3,37 @@
 {% block content %}
  	<div class="row">
 
-    <div class="col-md-5 col-sm-5 col-xs-5">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">            	
-                <h2>Administradores <small>Administradores</small></h2>
-                <a href="{% url 'admin_users:add_user_admin' %}" class="btn btn-round btn-success right-align">Agregar administrador</a>                
+                <h2>Usuarios <small>Normales</small></h2>
+                <a href="{% url 'admin_users:base_user_add' %}" class="btn btn-round btn-success right-align">Agregar usuario</a>                
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 <table id="example" class="table table-striped responsive-utilities jambo_table">
                     <thead>
                         <tr class="headings">
-                            <th>Usuario </th>
-                            <th class=" no-link last"><span class="nobr">Eliminar</span>
-                            </th>
+                            <th class=" no-link last col-md-2"><span class="nobr">Apellido</span></th>
+                            <th class=" no-link last col-md-2"><span class="nobr">Nombre</span></th>
+                            <th class=" no-link last col-md-2"><span class="nobr">Correo</span></th>
+                            <th class=" no-link last col-md-1"><span class="nobr">Edad</span></th>
+                            <th class=" no-link last col-md-1"><span class="nobr">Sexo</span></th>
+                            <th class=" no-link last col-md-1"><span class="nobr">Teléfono</span></th>
+                            <th class=" no-link last col-md-3"><span class="nobr">Direccion</span></th>
                         </tr>
                     </thead>
 
                     <tbody>
-                    	{% for admin in admin_users %}
+                    	{% for base_user in base_users %}
 							<tr class="even pointer">
-	                            <td class="a-center ">{{ admin.user.username }}</td>
-                                {% if admin.user == user %}
-                                    <td></td>
-                                {% else %}
-                                    <td class="a-center "><a href="{% url 'admin_users:delete_user_admin' admin.id %}"><i class="fa fa-close"></i></a></td>
-                                {% endif %}	                            	                            
+	                            <td class="a-center col-md-2">{{ base_user.last_name }}</td>
+                                <td class="a-center col-md-2">{{ base_user.name }}</td>
+                                <td class="a-center col-md-2">{{ base_user.user.username }}</td>
+                                <td class="a-center col-md-1">{{ base_user.age }}</td>
+                                <td class="a-center col-md-1">{{ base_user.get_sex_display }}</td>
+                                <td class="a-center col-md-1">{{ base_user.phone }}</td>
+                                <td class="a-center col-md-3">{{ base_user.address }}</td>
                         	</tr>
                     	{% endfor %}
                                                 

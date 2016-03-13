@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
-from .models import AdminUser
+from .models import AdminUser, BaseUser
 from library.models import Book, Author, Category
 
 
@@ -33,10 +33,12 @@ def dashboard(request):
 	books_num = Book.objects.all().count()
 	authors_num = Author.objects.all().count()
 	categories_num = Category.objects.all().count()
+	users = BaseUser.objects.all().count()
 	context = {
 		'books_num': books_num,
 		'authors_num': authors_num,
 		'categories_num': categories_num,
+		'users_num': users,
 	}
 	return render(request, 'administrador/dashboard.html', context)
 
@@ -72,6 +74,45 @@ def delete_user_admin(request, pk):
 	admin_user.user.delete()
 	admin_user.delete()
 	return redirect('admin_users:users_admin')
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def base_user_list(request):
+	base_users = BaseUser.objects.all().order_by('last_name')
+	context = {
+		'base_users': base_users,
+	}
+	return render(request, 'administrador/base_users_list.html', context)
+
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def base_user_add(request):
+	if request.method == 'POST':
+		name = request.POST.get('name', None)
+		last_name = request.POST.get('last_name', None)
+		email = request.POST.get('email', None)
+		age = request.POST.get('age', None)
+		sex = request.POST.get('sex', None)
+		phone = request.POST.get('number', None)
+		password = request.POST.get('password', None)
+		address = request.POST.get('address', None)
+		user, created = User.objects.get_or_create(username=email)
+		user.set_password(password)
+		user.save()
+		BaseUser.objects.create(user=user,
+								name=name,
+								last_name=last_name,
+								age=age,
+								sex=sex,
+								phone=phone,
+								address=address)
+		return redirect('admin_users:base_user_list')
+
+	context = {}
+	return render(request, 'administrador/base_user_add.html', context)
+
+
+
 
 
 
