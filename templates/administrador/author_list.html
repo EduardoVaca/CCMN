@@ -14,7 +14,7 @@
                 <table id="example" class="table table-striped responsive-utilities jambo_table">
                     <thead>
                         <tr class="headings">
-                            <th class=" no-link last col-md-6"><span class="nobr">Autor</span></th>
+                            <th class=" no-link last col-md-4"><span class="nobr">Autor</span></th>
                             <th class=" no-link last col-md-2"><span class="nobr">Editar</span></th>
                             <th class=" no-link last col-md-2"><span class="nobr">Eliminar</span>
                             </th>
@@ -24,7 +24,7 @@
                     <tbody>
                     	{% for author in authors %}
 							<tr class="even pointer">
-	                            <td class="a-center ">{{ author.name }}</td>
+	                            <td class="a-center col-md-4">{{ author.name }}</td>
                                 <td class="a-center col-md-2"><a href="{% url 'library:author_update' author.id %}"><i class="fa fa-edit"></i></a></td>
                                 <td class="a-center col-md-2"><a href="{% url 'library:author_delete' author.id %}"><i class="fa fa-close"></i></a></td>
                         	</tr>
@@ -47,14 +47,19 @@
         $(document).ready(function () {
             var oTable = $('#example').dataTable({
                 "oLanguage": {
-                    "sSearch": "Search all columns:"
+                    "sSearch": "Buscar:"
                 },
                 "aoColumnDefs": [
                     {
                         'bSortable': false,
-                        'aTargets': [0]
-                    } //disables sorting for column one
-        ],
+                        'aTargets': [1]
+                    }, //disables sorting for column one,
+                    {
+                        'bSortable': false,
+                        'aTargets': [2]
+                    }, //disables sorting for column two,
+                ],
+               
                 'iDisplayLength': 12,
                 "sPaginationType": "full_numbers",
                 "dom": 'T<"clear">lfrtip',
