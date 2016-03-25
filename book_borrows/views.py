@@ -35,6 +35,7 @@ def borrow_add(request):
 		date_str = request.POST.get('end_date')
 		end_date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
 		Borrow.objects.create(user=user, book=book, end_date=end_date)
+		Book.objects.filter(pk=book_pk).update(book_status='BO')
 		return redirect('book_borrows:borrow_list')
 
 	books = Book.objects.filter(book_status='AV')
