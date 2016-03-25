@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 from .models import AdminUser, BaseUser
 from library.models import Book, Author, Category
+from book_borrows.models import Borrow
 
 
 def in_admin_group(user):
@@ -34,11 +35,15 @@ def dashboard(request):
 	authors_num = Author.objects.all().count()
 	categories_num = Category.objects.all().count()
 	users = BaseUser.objects.all().count()
+	borrowed = Borrow.objects.filter(status='BO').count()
+	expired = Borrow.objects.filter(status='EX').count()
 	context = {
 		'books_num': books_num,
 		'authors_num': authors_num,
 		'categories_num': categories_num,
 		'users_num': users,
+		'borrowed_num': borrowed,
+		'expired_num': expired,
 	}
 	return render(request, 'administrador/dashboard.html', context)
 
