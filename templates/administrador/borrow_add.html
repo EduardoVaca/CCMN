@@ -1,0 +1,130 @@
+{% extends 'administrador/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="x_title">               
+                <h2>Nuevo Préstamo</h2>                
+                <div class="clearfix"></div>
+            </div>
+    <div class="row row-centered">
+        <div class="col-lg-12 col-md-6 col-sm-6 col-centered">
+            <form class="form-horizontal form-label-left" novalidate method='POST'> 
+            {% csrf_token %}               
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Usuario <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="select2_single form-control" tabindex="-1" name="user" required="required">
+                            {% for user in users %}
+                                <option value="{{ user.pk }}">{{ user.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Libro <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select class="select2_single form-control" tabindex="-1" name="book" required="required">
+                            {% for book in books %}
+                                <option value="{{ book.pk }}">{{ book.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="item form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Fecha devolución <span class="required">*</span>
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" class="form-control datepicker" name="end_date" required="required">
+                    </div>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3">
+                        <button id="send" type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        // initialize the validator function
+        validator.message['date'] = 'not a real date';
+
+        // validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+        $('form')
+            .on('blur', 'input[required], input.optional, select.required', validator.checkField)
+            .on('change', 'select.required', validator.checkField)
+            .on('keypress', 'input[required][pattern]', validator.keypress);
+
+        $('.multi.required')
+            .on('keyup blur', 'input', function () {
+                validator.checkField.apply($(this).siblings().last()[0]);
+            });
+
+        // bind the validation to the form submit event
+        //$('#send').click('submit');//.prop('disabled', true);
+
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var submit = true;
+            // evaluate the form using generic validaing
+            if (!validator.checkAll($(this))) {
+                submit = false;
+            }
+
+            if (submit)
+                this.submit();
+            return false;
+        });
+
+        /* FOR DEMO ONLY */
+        $('#vfields').change(function () {
+            $('form').toggleClass('mode2');
+        }).prop('checked', false);
+
+        $('#alerts').change(function () {
+            validator.defaults.alerts = (this.checked) ? false : true;
+            if (this.checked)
+                $('form .alert').remove();
+        }).prop('checked', false);
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $(".select2_single").select2({
+                placeholder: "Selecciona opción",
+                allowClear: true
+            });
+            $(".select2_group").select2({});
+            $(".select2_multiple").select2({
+                maximumSelectionLength: 4,
+                placeholder: "With Max Selection limit 4",
+                allowClear: true
+            });
+        });
+    </script>
+    <!-- /select2 -->
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $( ".datepicker" ).datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: 0
+            });
+        });
+    </script>
+{% endblock %}
