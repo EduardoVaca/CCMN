@@ -16,6 +16,10 @@
     color: #20c0fb;
 }
 
+.red-cell {    
+    color: #eb2529;
+}
+
 body.nav-sm .container.body .left_col {
     width: 70px;
     padding: 0;
