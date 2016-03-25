@@ -27,7 +27,7 @@ class Borrow(models.Model):
 								default='BO')
 
 	def save(self, *args, **kwargs):
-		if self.start_date < self.end_date:
+		if  self.end_date > self.start_date.date():
 			super().save(*args, **kwargs)
 		else:
 			raise ValidationError('Book borrow cannot end before it begins')
