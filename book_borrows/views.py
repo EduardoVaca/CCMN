@@ -46,3 +46,11 @@ def borrow_add(request):
 	}
 	return render(request, 'administrador/borrow_add.html', context)
 
+
+@user_passes_test(in_admin_group, login_url = 'admin_users:authentication')
+def borrow_return(request, pk):
+	borrow = get_object_or_404(Borrow, pk=pk)
+	Book.objects.filter(pk=borrow.book.pk).update(book_status='AV')
+	Borrow.objects.filter(pk=pk).update(status='RE')
+	return redirect('book_borrows:borrow_list')
+

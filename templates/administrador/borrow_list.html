@@ -32,12 +32,14 @@
                                 <td class="a-center col-md-2">{{ borrow.end_date.date }}</td>
                                 {% if borrow.status == 'BO' %}
                                     <td class="blue-cell col-md-2">{{ borrow.get_status_display }}</td>
+                                    <td class="a-center col-md-1"><a href="{% url 'book_borrows:borrow_return' borrow.pk %}"><button type="button" class="btn btn-primary">Regresar</button></a></td>
                                 {% elif borrow.status == 'RE' %}
                                     <td class="green-cell col-md-2">{{ borrow.get_status_display }}</td>
+                                    <td class="a-center col-md-1"></td>
                                 {% else %}
                                     <td class="red-cell col-md-2">{{ borrow.get_status_display }}</td>
-                                {% endif %}
-                                <td class="a-center col-md-1"><button type="button" class="btn btn-primary">Regresar</button></td>
+                                    <td class="a-center col-md-1"><a href="{% url 'book_borrows:borrow_return' borrow.pk %}"><button type="button" class="btn btn-primary">Regresar</button></a></td>
+                                {% endif %}                                
                         	</tr>
                     	{% endfor %}
                                                 
