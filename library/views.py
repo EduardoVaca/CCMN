@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import Author, Category, Book, Wrote, Has
 from .forms import AuthorForm, CategoryForm, BookForm
@@ -29,6 +30,7 @@ def author_add(request):
 		if form.is_valid():
 			author = form.save()
 			author.save()
+			messages.success(request, 'El autor se ha agregado con éxito')
 			return redirect('library:author_list')
 	else:
 		form = AuthorForm()
@@ -45,6 +47,7 @@ def author_update(request, pk):
 		form = AuthorForm(request.POST or None, instance=current_author)
 		if form.is_valid():
 			form.save()
+			messages.success(request, 'El autor se ha modificado con éxito')
 			return redirect('library:author_list')
 	else:
 		form = AuthorForm(instance=current_author)
@@ -58,6 +61,7 @@ def author_update(request, pk):
 def author_delete(request, pk):
 	author = get_object_or_404(Author, pk=pk)
 	author.delete()	
+	messages.success(request, 'El autor se ha eliminado con éxito')
 	return redirect('library:author_list')
 
 
@@ -77,6 +81,7 @@ def category_add(request):
 		if form.is_valid():
 			category = form.save()
 			category.save()
+			messages.success(request, 'La categoría se ha guardado con éxito')
 			return redirect('library:category_list')
 	else:
 		form = CategoryForm()
@@ -93,6 +98,7 @@ def category_update(request, pk):
 		form = CategoryForm(request.POST or None, instance=current_category)
 		if form.is_valid():
 			form.save()
+			messages.success(request, 'La categoría se ha modificado con éxito')
 			return redirect('library:category_list')
 	else:
 		form = CategoryForm(instance=current_category)
@@ -106,6 +112,7 @@ def category_update(request, pk):
 def category_delete(request, pk):
 	category = get_object_or_404(Category, pk=pk)
 	category.delete()
+	messages.success(request, 'La categoría se ha eliminado con éxito')
 	return redirect('library:category_list')
 
 
@@ -131,6 +138,7 @@ def book_add(request):
 		for category in categories:
 			current_category = Category.objects.get(pk=category)
 			Has.objects.create(book=book, category=current_category)
+		messages.success(request, 'El libro se ha guardado con éxito')
 		return redirect('library:book_list')
 
 	authors = Author.objects.all().order_by('name')
@@ -146,4 +154,5 @@ def book_add(request):
 def book_delete(request, pk):
 	book = get_object_or_404(Book, pk=pk)
 	book.delete()
+	messages.success(request, 'El libro se ha eliminado con éxito')
 	return redirect('library:book_list')

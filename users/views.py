@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import AdminUser, BaseUser
 from library.models import Book, Author, Category
@@ -67,6 +68,7 @@ def add_user_admin(request):
 		user.save()		
 		admin_user = AdminUser.objects.create(user=user)		
 		admin_user.save()
+		messages.success(request, 'El administrador se ha agregado con éxito')
 		return redirect('admin_users:users_admin')
 	else:
 		context = {}
@@ -78,6 +80,7 @@ def delete_user_admin(request, pk):
 	admin_user = get_object_or_404(AdminUser, pk = pk)
 	admin_user.user.delete()
 	admin_user.delete()
+	messages.success(request, 'El administrador se ha eliminado con éxito')
 	return redirect('admin_users:users_admin')
 
 
@@ -111,6 +114,7 @@ def base_user_add(request):
 								sex=sex,
 								phone=phone,
 								address=address)
+		messages.success(request, 'El usuario se ha guardado con éxito')
 		return redirect('admin_users:base_user_list')
 
 	context = {}

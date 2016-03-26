@@ -189,8 +189,11 @@
     <script src="{% static 'js/custom.js' %}"></script>
     <!-- select2 -->
     <script src="{% static 'js/select/select2.full.js' %}"></script>
-
-    <!-- select2 -->
+    <!-- PNotify -->
+    <script type="text/javascript" src="{% static 'js/notify/pnotify.core.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/notify/pnotify.buttons.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/notify/pnotify.nonblock.js' %}"></script>
+    
 
     {% block js %}
     {% endblock %}
@@ -200,6 +203,38 @@
     </script>
     <!-- /datepicker -->
     <!-- /footer content -->
+    {% if messages %}
+        {% for message in messages %}
+        
+        <script>
+            new PNotify({
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    
+                    title: 'Zoinks!',
+                    text: '{{message}}',
+                    type: 'error',
+                    hide: false
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING  %}   
+                    title: 'Cuidado',
+                    text: '{{message}}',
+                    hide: false
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                    title: 'Información',
+                    text: '{{message}}',
+                    type: 'info',
+                    hide: false
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS  %}
+                    
+                    title: 'Éxito!',
+                    text: '{{message}}',
+                    type: 'success',
+                    hide: false 
+                {% endif %}
+            });
+        </script>
+        
+        {%  endfor %}
+    {% endif %}
 </body>
 
 </html>

@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 from .models import Borrow
 from library.models import Book
@@ -41,6 +42,7 @@ def borrow_add(request):
 		end_date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 		Borrow.objects.create(user=user, book=book, end_date=end_date)
 		Book.objects.filter(pk=book_pk).update(book_status='BO')
+		messages.success(request, 'El préstamo se ha registrado con éxito')
 		return redirect('book_borrows:borrow_list')
 
 	books = Book.objects.filter(book_status='AV')
@@ -56,6 +58,7 @@ def borrow_add(request):
 def borrow_return(request, pk):
 	Borrow.objects.filter(pk=pk).update(status='RE')
 	borrow = get_object_or_404(Borrow, pk=pk)
-	Book.objects.filter(pk=borrow.book.pk).update(book_status='AV')	
+	Book.objects.filter(pk=borrow.book.pk).update(book_status='AV')
+	messages.info(request, 'El libro se ha marcado como regresado')	
 	return redirect('book_borrows:borrow_list')
 
