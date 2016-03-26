@@ -25,6 +25,8 @@ def auth_login(request):
 			if user.groups.filter(name='administrator').exists() or user.is_superuser:
 				login(request, user)
 				return redirect('admin_users:dashboard')
+			else:
+				messages.error(request, 'La cuenta de usuario debe ser administrador para poder ingresar')
 
 	context = {}
 	return render(request, 'administrador/login.html', context)
