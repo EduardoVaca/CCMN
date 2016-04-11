@@ -5,6 +5,7 @@
 <h4>Iniciar Sesión</h4>
 <div>
 	<form method="post" action="#">
+		{% csrf_token %}
 		<div class="row uniform">
 			<div class="6u 12u$(xsmall)">
 				<input class="input-centered" type="text" name="username" id="demo-name" value="" placeholder="Correo Electrónico" />
