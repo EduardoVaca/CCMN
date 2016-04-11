@@ -65,6 +65,14 @@
     	float: center;    	
 	}
 
+	.green-cell {
+	    color: #25d34e;    
+	}
+
+	.blue-cell {    
+	    color: #20c0fb;
+	}
+
 /* Grid */
 
 	.row {

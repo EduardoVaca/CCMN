@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 from users.models import BaseUser
+from library.models import Book
 
 def in_base_user_group(user):
     """Use with a ``user_passes_test`` decorator to restrict access to 
@@ -34,6 +35,9 @@ def user_login(request):
 
 
 @user_passes_test(in_base_user_group, login_url = 'website:login')
-def book_list(request): 
-	context = {}
+def book_list(request):
+	books = Book.objects.all().order_by('name') 
+	context = {
+		'books': books,
+	}
 	return render(request, 'website/book_list.html', context)

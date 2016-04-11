@@ -1,4 +1,39 @@
 {% extends 'website/base_user_logged.html' %}
 
 {% block content %}
+<h5>Nuestros Libros</h5>
+	<div class="table-wrapper">
+		<table class="alt">
+			<thead>
+				<tr>
+					<th width="40%">Nombre</th>
+					<th width="30%">Autor</th>
+					<th width="20%">Categoría</th>
+					<th width="10%">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for book in books %}
+				<tr>
+					<td>{{ book.name }}</td>
+					<td>
+						{% for author in book.authors.all %}
+							{{ author.name }},
+                    	{% endfor %}
+					</td>
+					<td>
+						{% for category in book.categories.all %}
+							{{ category.name }},
+                    	{% endfor %}
+					</td>
+					{% if book.book_status == 'AV' %}
+						<td class="green-cell">{{ book.get_book_status_display }}</td>
+					{% else %}
+						<td class="blue-cell">{{ book.get_book_status_display }}</td>
+					{% endif %}
+				</tr>
+				{% endfor %}				
+			</tbody>
+		</table>
+	</div>
 {% endblock %}
