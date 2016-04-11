@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('users.urls', namespace='admin_users')),
     url(r'^', include('library.urls', namespace='library')),
-    url(r'^', include('book_borrows.urls', namespace='book_borrows')),    
+    url(r'^', include('book_borrows.urls', namespace='book_borrows')),
+    url(r'^', include('website.urls', namespace='website')),    
 ]

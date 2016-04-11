@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'website.apps.WebsiteConfig',
     'users.apps.UsersConfig',
     'library.apps.LibraryConfig',
     'book_borrows.apps.BookBorrowsConfig',
