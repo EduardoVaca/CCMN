@@ -1,4 +1,23 @@
 {% extends 'website/base.html' %}
 
 {% block content %}
+
+<h4>Iniciar Sesión</h4>
+<div>
+	<form method="post" action="#">
+		<div class="row uniform">
+			<div class="6u 12u$(xsmall)">
+				<input class="input-centered" type="text" name="username" id="demo-name" value="" placeholder="Correo Electrónico" />
+			</div>
+		</div>
+		<div class="row uniform" >
+			<div class="6u 12u$(xsmall)">
+				<input class="input-centered" type="password" name="password" id="demo-name" value="" placeholder="Contraseña" />
+			</div>
+		</div>
+		<br>
+		<button type="submit" class="button special">Ingresar</button>		
+	</form>
+</div>
+
 {% endblock %}

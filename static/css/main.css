@@ -56,6 +56,15 @@
 		box-sizing: border-box;
 	}
 
+	.div-centered {
+		text-align: center;
+	}
+
+	.input-centered {
+		display: inline;
+    	float: center;    	
+	}
+
 /* Grid */
 
 	.row {
