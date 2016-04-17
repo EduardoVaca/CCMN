@@ -1,7 +1,27 @@
 {% extends 'website/base_user_logged.html' %}
 
 {% block content %}
-<h5>Nuestros Libros</h5>
+<h5>Nuestros Libros</h5>	
+	<form method="get" action="#">
+		{% csrf_token %}
+		<div class="row uniform">		
+			<div class="5u 12u$(xsmall)">
+				<input class="input-centered" type="text" name="search-text" id="demo-name" value="" placeholder="{{search}}" />
+			</div>
+			<div class="3u 12u$(xsmall)">
+				<div class="select-wrapper">
+					<select name="search-class" id="demo-category">					
+						<option value="Book">Libro</option>
+						<option value="Author">Autor</option>
+						<option value="Category">Categoría</option>					
+					</select>
+				</div>
+			</div>
+			<div class="1.5u 12u$(xsmall)">
+				<button type="submit" class="button special">Buscar</button>	
+			</div>
+		</div>
+	</form>	
 	<div class="table-wrapper">
 		<table class="alt">
 			<thead>
