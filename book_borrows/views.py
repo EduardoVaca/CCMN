@@ -39,7 +39,7 @@ def borrow_add(request):
 		book_pk = request.POST.get('book')
 		book = get_object_or_404(Book, pk=book_pk)
 		date_str = request.POST.get('end_date')
-		end_date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+		end_date = datetime.strptime(date_str, "%Y-%m-%d")
 		Borrow.objects.create(user=user, book=book, end_date=end_date)
 		Book.objects.filter(pk=book_pk).update(book_status='BO')
 		messages.success(request, 'El préstamo se ha registrado con éxito')

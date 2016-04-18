@@ -82,8 +82,9 @@ def book_rennovation(request, pk):
 	rennovations = borrow.rennovations
 	days_diff = (end_date.date() - begin_date.date()).days 
 	if days_diff < 2 and days_diff > 0:
-		if rennovations < 3:				
-			rennovations += 1
-			Borrow.objects.filter(pk=pk).update(end_date=datetime.now()+timedelta(days=3))
-			Borrow.objects.filter(pk=pk).update(rennovations=rennovations)
+		if rennovations < 3:
+			if borrow.status == 'BO':				
+				rennovations += 1
+				Borrow.objects.filter(pk=pk).update(end_date=datetime.now()+timedelta(days=3))
+				Borrow.objects.filter(pk=pk).update(rennovations=rennovations)
 	return redirect('website:my_borrows')

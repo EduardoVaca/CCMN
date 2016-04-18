@@ -20,9 +20,19 @@
 					<td>{{ borrow.book.name }}</td>
 					<td>{{ borrow.start_date.date }}</td>
 					<td>{{ borrow.end_date.date }}</td>
-					<td>{{ borrow.get_status_display }}</td>
-					<td>{{ borrow.rennovations }}</td>
-					<td><a href="{% url 'website:book_rennovation' borrow.id %}" class="button special">Renovar</a></td>
+					{% if borrow.status == 'BO' %}
+						<td class="blue-cell">{{ borrow.get_status_display }}</td>
+						<td>{{ borrow.rennovations }}</td>
+						<td><a href="{% url 'website:book_rennovation' borrow.id %}" class="button special">Renovar</a></td>
+					{% elif borrow.status == 'RE' %}
+						<td class="green-cell">{{ borrow.get_status_display }}</td>
+						<td>{{ borrow.rennovations }}</td>
+						<td></td>
+					{% else %}
+						<td class="red-cell">{{ borrow.get_status_display }}</td>
+						<td>{{ borrow.rennovations }}</td>
+						<td></td>
+					{% endif %}
 				</tr>
 			{% endfor %}		
 		</tbody>
