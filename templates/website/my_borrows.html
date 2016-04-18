@@ -1,0 +1,29 @@
+{% extends 'website/base_user_logged.html' %}
+
+{% block content %}
+<h5>Mis préstamos</h5>	
+<div class="table-wrapper">
+	<table class="alt">
+		<thead>
+			<tr>
+				<th width="30%">Libro</th>
+				<th width="20%">Fecha préstamo</th>
+				<th width="20%">Fecha entrega</th>
+				<th width="10%">Renovaciones</th>
+				<th width="20%">Renovar</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for borrow in borrows %}
+				<tr>
+					<td>{{ borrow.book.name }}</td>
+					<td>{{ borrow.start_date.date }}</td>
+					<td>{{ borrow.end_date.date }}</td>
+					<td></td>
+					<td></td>
+				</tr>
+			{% endfor %}		
+		</tbody>
+	</table>
+</div>
+{% endblock %}

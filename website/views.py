@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from users.models import BaseUser
 from library.models import Book
+from book_borrows.models import Borrow
 
 def in_base_user_group(user):
     """Use with a ``user_passes_test`` decorator to restrict access to 
@@ -52,4 +53,15 @@ def book_list(request):
 		'books': books,
 		'search': search,
 	}
-	return render(request, 'website/book_list.html', context)	
+	return render(request, 'website/book_list.html', context)
+
+
+@user_passes_test(in_base_user_group, login_url = 'website:login')
+def my_borrows(request):
+	current_user = BaseUser.objects.get(user=request.user)
+	borrows = Borrow.objects.filter(user=current_user)	
+	context = {
+		'borrows': borrows,
+	}
+	return render(request, 'website/my_borrows.html', context)
+

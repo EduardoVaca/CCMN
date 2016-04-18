@@ -7,5 +7,6 @@ urlpatterns = [
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^logout/$', auth_views.logout, {'next_page': 'website:login'}, name='logout'),
 	url(r'^lectura/$', views.book_list, name='book_list'),
+	url(r'^mis-prestamos/$', views.my_borrows, name='my_borrows'),
 	url(r'^$', views.index, name='index'),	
 ]
