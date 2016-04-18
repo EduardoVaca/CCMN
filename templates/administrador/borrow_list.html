@@ -36,7 +36,7 @@
                                     <td class="blue-cell col-md-2">{{ borrow.get_status_display }}</td>
                                     <td class="a-center col-md-1 center-cell">{{ borrow.rennovations }}</td>
                                     <td class="a-center col-md-1"><a href="{% url 'book_borrows:borrow_return' borrow.pk %}"><button type="button" class="btn btn-primary">Regresar</button></a></td>
-                                    <td class="a-center col-md-1"><a href=""><button type="button" class="btn btn-info">Renovar</button></a></td>
+                                    <td class="a-center col-md-1"><a href="{% url 'book_borrows:borrow_rennovation' borrow.pk %}"><button type="button" class="btn btn-info">Renovar</button></a></td>
                                 {% elif borrow.status == 'RE' %}
                                     <td class="green-cell col-md-2">{{ borrow.get_status_display }}</td>
                                     <td class="a-center col-md-1 center-cell">{{ borrow.rennovations }}</td>
