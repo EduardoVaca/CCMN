@@ -16,29 +16,37 @@
                         <tr class="headings">
                             <th class=" no-link last col-md-2"><span class="nobr">Usuario</span></th>
                             <th class=" no-link last col-md-3"><span class="nobr">Libro</span></th>
-                            <th class=" no-link last col-md-2"><span class="nobr">Fecha préstamo</span></th>
-                            <th class=" no-link last col-md-2"><span class="nobr">Fecha regreso</span></th>
+                            <th class=" no-link last col-md-2"><span class="nobr">Préstamo</span></th>
+                            <th class=" no-link last col-md-2"><span class="nobr">Vence</span></th>
                             <th class=" no-link last col-md-2"><span class="nobr">Estado</span></th>
-                            <th class=" no-link last col-md-1"><span class="nobr">Acción</span></th>
+                            <th class=" no-link last col-md-1"><span class="nobr">Renovaciones</span></th>
+                            <th class=" no-link last col-md-1"><span class="nobr">Regresar</span></th>
+                            <th class=" no-link last col-md-1"><span class="nobr">Renovar</span></th>
                         </tr>
                     </thead>
 
                     <tbody>
                     	{% for borrow in borrows %}
 							<tr class="even pointer">
-	                            <td class="a-center col-md-2">{{ borrow.user.name }}</td>
+	                            <td class="a-center col-md-2">{{ borrow.user.name }} {{ borrow.user.last_name }}</td>
                                 <td class="a-center col-md-3">{{ borrow.book.name }}</td>
                                 <td class="a-center col-md-2">{{ borrow.start_date.date }}</td>
                                 <td class="a-center col-md-2">{{ borrow.end_date.date }}</td>
                                 {% if borrow.status == 'BO' %}
                                     <td class="blue-cell col-md-2">{{ borrow.get_status_display }}</td>
+                                    <td class="a-center col-md-1">{{ borrow.rennovations }}</td>
                                     <td class="a-center col-md-1"><a href="{% url 'book_borrows:borrow_return' borrow.pk %}"><button type="button" class="btn btn-primary">Regresar</button></a></td>
+                                    <td class="a-center col-md-1"><a href=""><button type="button" class="btn btn-primary">Renovar</button></a></td>
                                 {% elif borrow.status == 'RE' %}
                                     <td class="green-cell col-md-2">{{ borrow.get_status_display }}</td>
+                                    <td class="a-center col-md-1">{{ borrow.rennovations }}</td>
+                                    <td class="a-center col-md-1"></td>
                                     <td class="a-center col-md-1"></td>
                                 {% else %}
                                     <td class="red-cell col-md-2">{{ borrow.get_status_display }}</td>
+                                    <td class="a-center col-md-1">{{ borrow.rennovations }}</td>
                                     <td class="a-center col-md-1"><a href="{% url 'book_borrows:borrow_return' borrow.pk %}"><button type="button" class="btn btn-primary">Regresar</button></a></td>
+                                    <td class="a-center col-md-1"></td>
                                 {% endif %}                                
                         	</tr>
                     	{% endfor %}
