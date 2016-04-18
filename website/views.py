@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+from datetime import date, datetime, timedelta
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -14,6 +16,8 @@ def in_base_user_group(user):
     authenticated users who are not in the "administrator" group."""
     return user.is_authenticated() and user.groups.filter(name='usuario_base').exists()
 
+def rennovation():
+	return timezone.now() + timezone.timedelta(days=3)
 
 def index(request):
 	context = {}
@@ -69,3 +73,17 @@ def my_borrows(request):
 	}
 	return render(request, 'website/my_borrows.html', context)
 
+
+@user_passes_test(in_base_user_group, login_url = 'website:login')
+def book_rennovation(request, pk):
+	borrow = get_object_or_404(Borrow, pk=pk)
+	begin_date = borrow.start_date
+	end_date = borrow.end_date
+	rennovations = borrow.rennovations
+	days_diff = (end_date.date() - begin_date.date()).days 
+	if days_diff < 2 and days_diff > 0:
+		if rennovations < 3:				
+			rennovations += 1
+			Borrow.objects.filter(pk=pk).update(end_date=datetime.now()+timedelta(days=3))
+			Borrow.objects.filter(pk=pk).update(rennovations=rennovations)
+	return redirect('website:my_borrows')

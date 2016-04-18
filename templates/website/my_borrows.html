@@ -22,7 +22,7 @@
 					<td>{{ borrow.end_date.date }}</td>
 					<td>{{ borrow.get_status_display }}</td>
 					<td>{{ borrow.rennovations }}</td>
-					<td></td>
+					<td><a href="{% url 'website:book_rennovation' borrow.id %}" class="button special">Renovar</a></td>
 				</tr>
 			{% endfor %}		
 		</tbody>
