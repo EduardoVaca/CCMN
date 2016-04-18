@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
@@ -60,6 +61,9 @@ def book_list(request):
 def my_borrows(request):
 	current_user = BaseUser.objects.get(user=request.user)
 	borrows = Borrow.objects.filter(user=current_user)	
+	for borrow in borrows:
+		if timezone.now().date() > borrow.end_date.date() and borrow.status != 'RE':
+			Borrow.objects.filter(pk=borrow.pk).update(status='EX')
 	context = {
 		'borrows': borrows,
 	}

@@ -12,6 +12,7 @@ class Borrow(models.Model):
 
 	start_date = models.DateTimeField(default=timezone.now)
 	end_date = models.DateTimeField(null=False)
+	rennovations = models.IntegerField(default=0)
 
 	STATUS_RETURNED = 'RE'
 	STATUS_BORROWED = 'BO'
